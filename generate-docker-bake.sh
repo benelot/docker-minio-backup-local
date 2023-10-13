@@ -42,7 +42,7 @@ target "alpine" {
 target "debian-latest" {
 	inherits = ["debian"]
 	platforms = [$P]
-	args = {"BASETAG" = "debian"}
+	args = {"BASETAG" = "latest"}
 	tags = [
 		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:latest"
 	]
@@ -51,7 +51,7 @@ target "debian-latest" {
 target "alpine-latest" {
 	inherits = ["alpine"]
 	platforms = [$P]
-	args = {"BASETAG" = "alpine"}
+	args = {"BASETAG" = "latest"}
 	tags = [
 		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:latest"
 	]

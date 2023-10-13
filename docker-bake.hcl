@@ -27,7 +27,7 @@ target "alpine" {
 target "debian-latest" {
 	inherits = ["debian"]
 	platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/s390x", "linux/ppc64le"]
-	args = {"BASETAG" = "debian"}
+	args = {"BASETAG" = "latest"}
 	tags = [
 		"${REGISTRY_PREFIX}${IMAGE_NAME}:latest"
 	]
@@ -36,7 +36,7 @@ target "debian-latest" {
 target "alpine-latest" {
 	inherits = ["alpine"]
 	platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/s390x", "linux/ppc64le"]
-	args = {"BASETAG" = "alpine"}
+	args = {"BASETAG" = "latest"}
 	tags = [
 		"${REGISTRY_PREFIX}${IMAGE_NAME}:latest"
 	]
