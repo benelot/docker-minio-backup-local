@@ -1,5 +1,5 @@
 group "default" {
-	targets = ["latest"]
+	targets = ["alpine-latest", "debian-latest"]
 }
 
 variable "REGISTRY_PREFIX" {

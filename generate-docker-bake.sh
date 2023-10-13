@@ -10,7 +10,7 @@ cd "$(dirname "$0")"
 
 P="\"$(echo $PLATFORMS | sed 's/ /", "/g')\""
 
-T="\"latest\""
+T="\"alpine-latest\", \"debian-latest\""
 
 cat > "$DOCKER_BAKE_FILE" << EOF
 group "default" {
