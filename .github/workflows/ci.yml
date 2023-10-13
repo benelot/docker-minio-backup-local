@@ -13,9 +13,8 @@ on:
 jobs:
   test-script:
     runs-on: ubuntu-22.04
-
-services:
-    minio:
+    services:
+      minio:
         image: minio/minio
         command: server .
         volumes:
