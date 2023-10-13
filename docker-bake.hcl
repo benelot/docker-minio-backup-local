@@ -7,7 +7,7 @@ variable "REGISTRY_PREFIX" {
 }
 
 variable "IMAGE_NAME" {
-	default = "postgres-backup-local"
+	default = "minio-backup-local"
 }
 
 variable "BUILD_REVISION" {
