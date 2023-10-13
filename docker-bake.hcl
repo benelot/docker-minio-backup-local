@@ -1,5 +1,5 @@
 group "default" {
-	targets = ["latest", "latest"]
+	targets = ["latest"]
 }
 
 variable "REGISTRY_PREFIX" {
@@ -27,21 +27,17 @@ target "alpine" {
 target "debian-latest" {
 	inherits = ["debian"]
 	platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/s390x", "linux/ppc64le"]
-	args = {"BASETAG" = "16"}
+	args = {"BASETAG" = "debian"}
 	tags = [
-		"${REGISTRY_PREFIX}${IMAGE_NAME}:latest",
-		"${REGISTRY_PREFIX}${IMAGE_NAME}:16",
-		notequal("", BUILD_REVISION) ? "${REGISTRY_PREFIX}${IMAGE_NAME}:16-debian-${BUILD_REVISION}" : ""
+		"${REGISTRY_PREFIX}${IMAGE_NAME}:latest"
 	]
 }
 
 target "alpine-latest" {
 	inherits = ["alpine"]
 	platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7", "linux/s390x", "linux/ppc64le"]
-	args = {"BASETAG" = "16-alpine"}
+	args = {"BASETAG" = "alpine"}
 	tags = [
-		"${REGISTRY_PREFIX}${IMAGE_NAME}:alpine",
-		"${REGISTRY_PREFIX}${IMAGE_NAME}:16-alpine",
-		notequal("", BUILD_REVISION) ? "${REGISTRY_PREFIX}${IMAGE_NAME}:16-alpine-${BUILD_REVISION}" : ""
+		"${REGISTRY_PREFIX}${IMAGE_NAME}:latest"
 	]
 }

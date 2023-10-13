@@ -3,7 +3,6 @@
 set -e
 
 GOCRONVER="v0.0.10"
-MAIN_TAG="16"
 PLATFORMS="linux/amd64 linux/arm64 linux/arm/v7 linux/s390x linux/ppc64le"
 DOCKER_BAKE_FILE="${1:-docker-bake.hcl}"
 
@@ -11,7 +10,7 @@ cd "$(dirname "$0")"
 
 P="\"$(echo $PLATFORMS | sed 's/ /", "/g')\""
 
-T="\"latest\", \"latest\""
+T="\"latest\""
 
 cat > "$DOCKER_BAKE_FILE" << EOF
 group "default" {
@@ -43,46 +42,18 @@ target "alpine" {
 target "debian-latest" {
 	inherits = ["debian"]
 	platforms = [$P]
-	args = {"BASETAG" = "$MAIN_TAG"}
+	args = {"BASETAG" = "debian"}
 	tags = [
-		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:latest",
-		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:$MAIN_TAG",
-		notequal("", BUILD_REVISION) ? "\${REGISTRY_PREFIX}\${IMAGE_NAME}:$MAIN_TAG-debian-\${BUILD_REVISION}" : ""
+		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:latest"
 	]
 }
 
 target "alpine-latest" {
 	inherits = ["alpine"]
 	platforms = [$P]
-	args = {"BASETAG" = "$MAIN_TAG-alpine"}
+	args = {"BASETAG" = "alpine"}
 	tags = [
-		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:alpine",
-		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:$MAIN_TAG-alpine",
-		notequal("", BUILD_REVISION) ? "\${REGISTRY_PREFIX}\${IMAGE_NAME}:$MAIN_TAG-alpine-\${BUILD_REVISION}" : ""
+		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:latest"
 	]
 }
 EOF
-
-for TAG in $TAGS_EXTRA; do cat >> "$DOCKER_BAKE_FILE" << EOF
-
-target "debian-$TAG" {
-	inherits = ["debian"]
-	platforms = [$P]
-	args = {"BASETAG" = "$TAG"}
-	tags = [
-		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:$TAG",
-		notequal("", BUILD_REVISION) ? "\${REGISTRY_PREFIX}\${IMAGE_NAME}:$TAG-debian-\${BUILD_REVISION}" : ""
-	]
-}
-
-target "alpine-$TAG" {
-	inherits = ["alpine"]
-	platforms = [$P]
-	args = {"BASETAG" = "$TAG-alpine"}
-	tags = [
-		"\${REGISTRY_PREFIX}\${IMAGE_NAME}:$TAG-alpine",
-		notequal("", BUILD_REVISION) ? "\${REGISTRY_PREFIX}\${IMAGE_NAME}:$TAG-alpine-\${BUILD_REVISION}" : ""
-	]
-}
-EOF
-done
