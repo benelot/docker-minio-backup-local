@@ -16,7 +16,6 @@ jobs:
     services:
       minio:
         image: minio/minio
-        command: server .
         volumes:
             - .:/data
     steps:
